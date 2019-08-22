@@ -26,9 +26,9 @@ suite "lib/portscan test":
         const valid_port_https = 443
         const invalid_port = 323
 
-        let list = scan_port_range(url, [0, 1023], timeout_msec=4000)
+        let list = scan_port_range(url, [50, 500], timeout_msec=4000)
         
-        assert list[valid_port_http] == true
-        assert list[valid_port_https] == true
-        assert list[invalid_port] == false
+        assert list[valid_port_http - 50] == true
+        assert list[valid_port_https - 50] == true
+        assert list[invalid_port - 50] == false
 
