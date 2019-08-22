@@ -1,0 +1,8 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t nnst-test -f Dockerfile_test .
+script:
+  - docker run -t nnst-test
+  
