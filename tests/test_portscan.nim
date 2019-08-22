@@ -19,3 +19,16 @@ suite "lib/portscan test":
         assert scan_port(valid_url, valid_port, timeout) == true
         assert scan_port(valid_url, invalid_port, timeout) == false
         assert scan_port(invalid_url, valid_port, timeout) == false
+    
+    test "proc scan_port_range":
+        const url = "google.com"
+        const valid_port_http = 80
+        const valid_port_https = 443
+        const invalid_port = 323
+
+        let list = scan_port_range(url, [0, 1023], timeout_msec=4000)
+        
+        assert list[valid_port_http] == true
+        assert list[valid_port_https] == true
+        assert list[invalid_port] == false
+
