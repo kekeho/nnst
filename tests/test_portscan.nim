@@ -6,12 +6,14 @@
 
 import unittest
 import ../lib/portscan
+import net
+import os
 
 suite "lib/portscan test":
     test "proc scan_port":
         const timeout = 2500
 
-        const valid_url = "google.com"
+        const valid_url = "test_server"
         const valid_port = 80
         const invalid_url = "dasfawoeitnyoaieawer.dafer2rfae"
         const invalid_port = 32013
@@ -21,7 +23,7 @@ suite "lib/portscan test":
         assert scan_port(invalid_url, valid_port, timeout) == false
     
     test "proc scan_port_range":
-        const url = "google.com"
+        const url = "test_server"
         const valid_port_http = 80
         const valid_port_https = 443
         const invalid_port = 323
@@ -32,3 +34,7 @@ suite "lib/portscan test":
         assert list[valid_port_https - 50] == true
         assert list[invalid_port - 50] == false
 
+    test "shutdown_test_server":
+        let sock = newSocket()
+        sock.connect("test_server", Port(9999))
+        assert true

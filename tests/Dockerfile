@@ -1,7 +1,5 @@
 FROM nimlang/nim
 
-COPY ./ /project
-
 WORKDIR /project
 
 CMD [ "nimble", "test" ]

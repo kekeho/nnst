@@ -27,12 +27,7 @@ nimble install
 ## Test
 
 ```sh
-nimble test
-```
+docker-compose -f docker-compose-test.yml build  # Build test containers
 
-or you can use docker
-
-```sh
-docker build -t nnst-test -f Dockerfile_test
-docker run -t nnst-test
+docker-compose -f docker-compose-test.yml up  # Start test
 ```

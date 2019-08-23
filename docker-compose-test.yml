@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  test_server:
+    build: tests/test_server
+  
+  unittest:
+    build: tests
+    depends_on:
+      - test_server
+    volumes:
+      - ./:/project
