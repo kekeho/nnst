@@ -1,6 +1,6 @@
 # NNST
 
-NNST: Network Scan Tool  
+NNST: Network Scan Tools
 
 ## Status
 Master: [![Build Status](https://travis-ci.org/kekeho/nnst.svg?branch=master)](https://travis-ci.org/kekeho/nnst)

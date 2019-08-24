@@ -9,6 +9,13 @@ import sugar
 import threadpool
 import os
 
+
+proc set_poolsize(size: int): void =
+    # Set poolsize as threads_num (not floating)
+    setMaxPoolSize(size)
+    setMinPoolSize(size)
+
+
 proc scan_port*(address: string, port: int, timeout_msec=2500): bool =
     let sock = newSocket()
     try:
@@ -22,24 +29,26 @@ proc scan_port*(address: string, port: int, timeout_msec=2500): bool =
 
 
 var result_list: array[65535+1, bool]
-proc scan_port_range_threadprocess(address: string, port: int, timeout_msec: int) {.thread.} =
+proc scan_port_threadprocess(address: string, port: int, timeout_msec: int) {.thread.} =
     let scan_result = address.scan_port(port, timeout_msec)
     result_list[port] = scan_result
 
 
-proc scan_port_range*(address: string, port_range: array[2, int], timeout_msec=2500, threads_num=256): seq[bool] =
-    # Set poolsize as threads_num (not floating)
-    setMaxPoolSize(threads_num)
-    setMinPoolSize(threads_num)
-
-    for p in port_range[0]..port_range[1]:
-        # Spawn thread
-        spawn scan_port_range_threadprocess(address, p, timeout_msec=timeout_msec)
-        
-    sync()  # waiting all threads...
-
-    result = result_list[port_range[0]..port_range[1]]
-
-    # finalize (all clear result_list var)
-    for p in port_range[0]..port_range[1]:
+proc init_result(port_list: openArray[int]): void =
+    for p in port_list:
         result_list[p] = false
+
+
+proc scan_port*(address: string, port_list: openArray[int], timeout_msec=2500, threads_num=256): seq[bool] =
+    set_poolsize(threads_num)
+
+    for p in port_list:
+        # Spawn thread
+        spawn scan_port_threadprocess(address, p, timeout_msec=timeout_msec)
+    
+    sync()
+
+    result = port_list.map(p => result_list[p])
+    
+    # finalize (all clear result_list var)
+    init_result(port_list)
