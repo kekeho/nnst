@@ -10,7 +10,13 @@ import strutils
 import sugar
 
 const VERSION = "0.1.0"
-const doc = """NNST: Network Scan Tools
+const doc = """　
+   _  ___  ____________
+  / |/ / |/ / __/_  __/
+ /    /    /\ \  / /
+/_/|_/_/|_/___/ /_/
+
+NNST: Network Scan Tools
 
 Usage:
     nnst portscan [-t=<timeout>] <address> <ports>...
@@ -23,10 +29,10 @@ Command:
 Options:
     address                     Target address (hostname, domain or IP)
     ports                       Target port list
-        example: 80, 80 443, 0:1023 (range)
     -t --timeout=<timeout>      Set timeout [ms] (default=2500)
 
     -r --range                  Range mode
+    <start_port>, <end_port>    Set scan range
 
     -h --help                   Show this help
     -v --version                Show version info
