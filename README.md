@@ -12,6 +12,8 @@ Master: [![Build Status](https://travis-ci.org/kekeho/nnst.svg?branch=master)](h
 
 Scan unix port (parallel), and check port is open.
 
+- WARNING: now only for TCP.
+
 ## Usage
 
 ```sh
@@ -28,6 +30,7 @@ Usage:
 
 Command:
     portscan: Check port(s) open
+        WARNING: now, only for TCP
 
 
 Options:

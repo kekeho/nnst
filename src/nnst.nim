@@ -24,6 +24,7 @@ Usage:
 
 Command:
     portscan: Check port(s) open
+        WARNING: now, only for TCP
 
 
 Options:
