@@ -17,6 +17,7 @@ const doc = """　
 /_/|_/_/|_/___/ /_/
 
 NNST: Network Scan Tools
+Copyright: Hiroki Takemura (kekeho) All Rights Reserved.
 
 Usage:
     nnst portscan [-t=<timeout>] <address> <ports>...
