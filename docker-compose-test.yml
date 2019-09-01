@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  test_server:
-    build: tests/test_server
+  test_server_portscan:
+    build: tests/test_server_portscan
   
   unittest:
     build: tests
     depends_on:
-      - test_server
+      - test_server_portscan
     volumes:
       - ./:/project
