@@ -25,7 +25,7 @@ Usage:
     nnst portscan [-t=<timeout>] <address> <ports>...
     nnst portscan [-t=<timeout>] <address> -r <start_port> <end_port>
     nnst portforward server <address> <server_port>
-    nnst portforward client <address> <server_port> <from_port> <to_port>
+    nnst portforward client <address> <server_port> <from_address> <from_port> <to_port>
 
 
 Command:
@@ -35,18 +35,19 @@ Command:
 
 
 Options:
-    address                     Target address (hostname, domain or IP)
-    ports                       Target port list
-    server_port                 Port which listening `nnst portforward` in server
-    from_port, to_port          Port forward <address>:<from_port> => localhost:<to_port>
+    address                             Target address (hostname, domain or IP)
+    ports                               Target port list
+    server_port                         Port which listening `nnst portforward` in server
+    
+    from_address, from_port, to_port    Port forward <from_address>(See from <address>):<from_port> => localhost:<to_port>
 
-    -t --timeout=<timeout>      Set timeout [ms] (default=2500)
+    -t --timeout=<timeout>              Set timeout [ms] (default=2500)
 
-    -r --range                  Range mode
-    <start_port>, <end_port>    Set scan range
+    -r --range                          Range mode
+    <start_port>, <end_port>            Set scan range
 
-    -h --help                   Show this help
-    -v --version                Show version info
+    -h --help                           Show this help
+    -v --version                        Show version info
 """
 
 let args = docopt(doc, version=VERSION)
@@ -89,9 +90,10 @@ elif args["portforward"]:
     elif args["client"]:
         let address: string = $args["<address>"]
         let dest_port = ($args["<server_port>"]).parseInt
+        let forward_from_address = $args["<from_address>"]
         let forward_from_port = ($args["<from_port>"]).parseInt
         let forward_to_port = ($args["<to_port>"]).parseInt
 
-        asyncCheck client(address, dest_port, forward_from_port, forward_to_port)
+        asyncCheck client(address, dest_port, forward_from_address, forward_from_port, forward_to_port)
         runForever()
 
