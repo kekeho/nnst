@@ -12,7 +12,7 @@ import strutils
 import sugar
 import asyncdispatch
 
-const VERSION = "0.1.0"
+const VERSION = "0.1.1"
 const doc = """　
    _  ___  ____________
   / |/ / |/ / __/_  __/
