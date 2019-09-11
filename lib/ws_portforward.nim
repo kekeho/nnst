@@ -13,7 +13,6 @@ proc dest_to_local(local: AsyncSocket, dest: AsyncWebSocket) {.async.} =
             
             case opcode
             of Opcode.Binary:
-                echo data
                 await local.send(data)
             of Opcode.Close:
                 echo "Connection closed"
@@ -31,7 +30,6 @@ proc local_to_dest(local: AsyncSocket, dest: AsyncWebSocket) {.async.} =
     while true:
         let data: string = await local.recv(1)
         if data.len > 0:
-            echo data
             await dest.sendBinary(data)
         else:
             return
@@ -57,7 +55,6 @@ proc server_process(request: Request) {.async.} =
         let (opcode, data) = await ws.readData()
         case opcode
         of Opcode.Text:
-            echo data
             let config_json = parseJson(data)
             echo config_json
             let from_port: int = config_json["from_port"].getInt()
