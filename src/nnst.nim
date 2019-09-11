@@ -5,6 +5,7 @@
 
 import ../lib/portscan
 import ../lib/portforward
+import ../lib/ws_portforward
 import docopt
 import sequtils
 import strutils
@@ -24,8 +25,8 @@ Copyright: Hiroki Takemura (kekeho) All Rights Reserved.
 Usage:
     nnst portscan [-t=<timeout>] <address> <ports>...
     nnst portscan [-t=<timeout>] <address> -r <start_port> <end_port>
-    nnst portforward server <address> <server_port>
-    nnst portforward client <address> <server_port> <from_address> <from_port> <to_port>
+    nnst portforward server [ws | tcp] <address> <server_port>
+    nnst portforward client [ws | tcp] <address> <server_port> <from_address> <from_port> <to_port>
 
 
 Command:
@@ -51,6 +52,8 @@ Options:
 """
 
 let args = docopt(doc, version=VERSION)
+
+echo args
 
 if args["portscan"]:
     let address: string = $args["<address>"]
@@ -84,7 +87,11 @@ elif args["portforward"]:
         let address: string = $args["<address>"]
         let port: int = ($args["<server_port>"]).parseInt
 
-        asyncCheck server(address, port)
+        if args["ws"]:
+            asyncCheck ws_portforward.server(address, port)
+        else:
+            asyncCheck portforward.server(address, port)
+
         runForever()
     
     elif args["client"]:
@@ -94,6 +101,9 @@ elif args["portforward"]:
         let forward_from_port = ($args["<from_port>"]).parseInt
         let forward_to_port = ($args["<to_port>"]).parseInt
 
-        asyncCheck client(address, dest_port, forward_from_address, forward_from_port, forward_to_port)
-        runForever()
+        if args["ws"]:
+            asyncCheck ws_portforward.client(address, dest_port, forward_from_address, forward_from_port, forward_to_port)
+        else:
+            asyncCheck portforward.client(address, dest_port, forward_from_address, forward_from_port, forward_to_port)
 
+        runForever()

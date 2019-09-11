@@ -11,3 +11,4 @@ bin           = @["nnst"]
 
 requires "nim >= 0.20.2"
 requires "docopt >= 0.6.8"
+requires "websocket >= 0.4.0"
