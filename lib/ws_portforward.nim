@@ -1,3 +1,8 @@
+# Copyright (c) 2019 hiroki
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
 import asynchttpserver
 import asyncdispatch
 import websocket
