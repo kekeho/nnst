@@ -45,8 +45,8 @@ proc server_process(request: Request) {.async.} =
 
     if ws.isNil:
         # Error
-        echo "Websocket negotiation failed " & error
-        await request.respond(Http400, "Websocket negotiation failed " & error)
+        echo "Websocket negotiation failed"
+        await request.respond(Http400, "Websocket negotiation failed ")
         request.client.close()
         return
 
